@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class Transition : MonoBehaviour
+public class TransitionManager : MonoBehaviour
 {
-    public static Transition instance;
+    public static TransitionManager instance;
 
     [Header("Const Variables")]
     private const float blinkTime = 1.0f;
