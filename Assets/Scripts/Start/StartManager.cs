@@ -49,6 +49,6 @@ public class StartManager : MonoBehaviour
     }
 
     public void SettingSignal() {
-        // SettingManager.instance.ActivateSetting();
+        SettingManager.instance.OpenSetting();
     }
 }

@@ -34,6 +34,7 @@ public class SettingManager : MonoBehaviour
     }
 
     public void CloseSetting(){
+        SaveSetting();
         settingCanvas.SetActive(false);
     }
 
@@ -57,11 +58,15 @@ public class SettingManager : MonoBehaviour
         effectSlider.onValueChanged.AddListener(delegate{ApplyVolumeChange();});
     }
 
-    private void ApplyVolumeChange(){
-        //DataManager.gameData.settingData.soundSetting.masterVolume = (int)(masterSlider.value * 100);
-        //DataManager.gameData.settingData.soundSetting.bgmVolume = (int)(bgmSlider.value * 100);
-        //DataManager.gameData.settingData.soundSetting.effectVolume = (int)(effectSlider.value * 100);
+    private void SaveSetting() {
+        int masterVolume = (int)(masterSlider.value * 100);
+        int bgmVolume = (int)(bgmSlider.value * 100);
+        int effectVolume = (int)(effectSlider.value * 100);
 
+        DataManager.instance.SetSoundSetting(isMute, masterVolume, bgmVolume, effectVolume);
+    }
+
+    private void ApplyVolumeChange(){
         //SoundManager.masterVolume = (int)(masterSlider.value * 100);
         //SoundManager.bgmVolume = (int)(bgmSlider.value * 100);
         //SoundManager.effectVolume = (int)(effectSlider.value * 100);
@@ -69,7 +74,6 @@ public class SettingManager : MonoBehaviour
 
     public void ToggleMute(){
         isMute = !isMute;
-        //DataManager.gameData.settingData.soundSetting.isMute = isMute;
         if(isMute){
             muteToggle.GetComponent<Image>().sprite = muteSprites[1];
         }

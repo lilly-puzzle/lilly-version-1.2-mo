@@ -50,4 +50,11 @@ public class DataManager : MonoBehaviour
     public void SetNewGame(bool a_newGame) {
         gameData.newGame = a_newGame;
     }
+
+    public void SetSoundSetting(bool a_isMute, int a_masterVolume, int a_bgmVolume, int a_effectVolume) {
+        gameData.settingData.soundSetting.isMute = a_isMute;
+        gameData.settingData.soundSetting.masterVolume = a_masterVolume;
+        gameData.settingData.soundSetting.bgmVolume = a_bgmVolume;
+        gameData.settingData.soundSetting.effectVolume = a_effectVolume;
+    }
 }
