@@ -4,7 +4,7 @@ using UnityEngine;
 
 using DataFrame;
 
-public class GameData : MonoBehaviour
+public class GameData
 {
     public bool newGame;
     public SettingData settingData;

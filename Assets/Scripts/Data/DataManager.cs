@@ -10,9 +10,8 @@ public class DataManager : MonoBehaviour
 
     private void Awake() {
         instance = this;
-    }
 
-    private void Start() {
+        gameData = new GameData();
         LoadDataFromJson();
     }
 
@@ -26,9 +25,10 @@ public class DataManager : MonoBehaviour
     private void SaveDataInJson() {
         if (FileManager.WriteToFile("GameData.dat", gameData.ToJson())) {
             Debug.Log("Save successful");
-        } else {
-            SaveDataInJson();
         }
+        // else {
+        //     SaveDataInJson();
+        // }
     }
 
     private void LoadDataFromJson() {
@@ -36,8 +36,6 @@ public class DataManager : MonoBehaviour
         
         if (result == 1) {
             gameData.LoadFromJson(json);
-        } else if (result == 0) {
-            gameData = new GameData();
         } else if (result == -1) {
             LoadDataFromJson();
         }
