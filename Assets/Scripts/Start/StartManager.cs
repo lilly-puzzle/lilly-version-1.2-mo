@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class StartManager : MonoBehaviour
 {
@@ -26,12 +25,12 @@ public class StartManager : MonoBehaviour
     }
 
     public void ContinueSignal() {
-        SceneManager.LoadScene("LoadingScene");
+        TransitionManager.instance.SceneTransition("LoadingScene");
     }
 
     public void NewGameSignal() {
         if (DataManager.gameData.newGame) {
-            SceneManager.LoadScene("LoadingScene");
+            TransitionManager.instance.SceneTransition("LoadingScene");
         } else {
             buttonPage.SetActive(false);
             popupPage.SetActive(true);
@@ -40,7 +39,7 @@ public class StartManager : MonoBehaviour
 
     public void PopupAcceptSignal() {
         DataManager.instance.SetNewGame(true);
-        SceneManager.LoadScene("LoadingScene");
+        TransitionManager.instance.SceneTransition("LoadingScene");
     }
 
     public void PopupCancelSignal() {

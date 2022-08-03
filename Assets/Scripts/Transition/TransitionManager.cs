@@ -23,6 +23,7 @@ public class TransitionManager : MonoBehaviour
     void Awake(){
         instance = this;
         filterColor = filterObject.GetComponent<Image>().color;
+        DontDestroyOnLoad(this.gameObject);
     }
 
     public void SceneTransition(string destScene){
