@@ -61,4 +61,8 @@ public class DataManager : MonoBehaviour
     public void SetPuzzleData(int[] a_clearedPuzzle) {
         gameData.playData.clearedPuzzle = a_clearedPuzzle;
     }
+
+    public void SetInventoryData(List<int> a_playerInventory) {
+        gameData.characterData.playerInventory = a_playerInventory;
+    }
 }
