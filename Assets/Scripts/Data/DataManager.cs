@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using DataFrame;
+
 public class DataManager : MonoBehaviour
 {
     public static DataManager instance;
@@ -13,6 +15,8 @@ public class DataManager : MonoBehaviour
 
         gameData = new GameData();
         LoadDataFromJson();
+
+        DontDestroyOnLoad(this.gameObject);
     }
 
     // If game is quited..
@@ -43,7 +47,9 @@ public class DataManager : MonoBehaviour
 
     // Reset
     public void ResetGame() {
-        gameData = new GameData();
+        gameData.newGame = true;
+        gameData.characterData = new CharacterData();
+        gameData.playData = new PlayData();
     }
 
     // Setter
