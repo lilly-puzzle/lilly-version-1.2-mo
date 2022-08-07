@@ -1,14 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class INZoomControl : MonoBehaviour
 {
-    public void ZoomItem(int a_itemCode) {
-        // TODO: 특정 아이템에 맞추어 sprite 변경 이벤트
+    [Header("Sprite Variables")]
+    private Image zoomImage;
+
+    private void Awake() {
+        zoomImage = GetComponent<Image>();
+    }
+
+    public void ZoomItem(Sprite a_itemSprite) {
+        zoomImage.sprite = a_itemSprite;
     }
 
     public void InputZoomedItem() {
-        // TODO: 변경한 sprite를 None으로 변경하는 이벤트
+        gameObject.SetActive(false);
     }
 }
