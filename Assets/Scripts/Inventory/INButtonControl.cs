@@ -4,8 +4,16 @@ using UnityEngine;
 
 public class INButtonControl : MonoBehaviour
 {
+    [Header("Variables")]
+    private bool isInvEnable;
+
+    [Header("Script Variables")]
+    [SerializeField] private INMoveControl inventoryMove;
+
     public void ToggleInventory() {
-        // TODO: 인벤토리 활성화 버튼에 대한 이벤트 처리
+        isInvEnable = !isInvEnable;
+        
+        inventoryMove.ToggleInventoryPosition(isInvEnable);
     }
 
     public void ShiftSlot(int a_shiftDir) {
