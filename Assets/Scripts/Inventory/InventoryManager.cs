@@ -4,13 +4,29 @@ using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
-    public static InventoryManager instance;
+    [System.Serializable] private class ItemSpriteByPuzzle {
+        public List<Sprite> spriteList;
+    }
 
-    [Header("Object Variables")]
-    [SerializeField] private List<GameObject> inventoryObj;
+    [System.Serializable] private class ItemSpritePerFloor {
+        public List<ItemSpriteByPuzzle> spriteByPuzzle;
+    }
+
+    public static InventoryManager instance;
 
     [Header("Variables")]
     private bool isChanged = false;
+    public int curSelectedItem { get; private set; }
+
+    [Header("Sprite Variables")]
+    [SerializeField] private List<ItemSpritePerFloor> itemSprite;
+
+    [Header("Object Variables")]
+    [SerializeField] private List<GameObject> inventoryObj;
+    [SerializeField] private GameObject zoomObj;
+
+    [Header("Script Variables")]
+    private INZoomControl zoomScript;
 
     // setter
     public void SetIsChanged(bool a_isChanged) { isChanged = a_isChanged; }
@@ -20,6 +36,8 @@ public class InventoryManager : MonoBehaviour
 
     private void Awake() {
         instance = this;
+
+        zoomScript = zoomObj.GetComponent<INZoomControl>();
     }
 
     private void Start() {
@@ -58,8 +76,17 @@ public class InventoryManager : MonoBehaviour
     }
 
     public void SelectItem(int a_itemCode) {
-        // make zoom item list for map structure
-        // if item belongs to list, zoom item
-        // else set item code to select variable
+        int floorNum = a_itemCode / 10000;
+        int puzzleNum = a_itemCode % 10000 / 100;
+        int itemNum = a_itemCode % 10000 % 100;
+
+        if (((DefaultData.ZOOM_OR_NOT[floorNum][puzzleNum] >> itemNum) & 1) == 1) {
+            zoomObj.SetActive(true);
+            zoomScript.ZoomItem(itemSprite[floorNum].spriteByPuzzle[puzzleNum].spriteList[itemNum]);
+
+            curSelectedItem = -1;
+        } else {
+            curSelectedItem = (curSelectedItem != a_itemCode) ? a_itemCode : -1;
+        }
     }
 }
