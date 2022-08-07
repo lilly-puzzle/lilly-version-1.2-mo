@@ -5,9 +5,9 @@ using UnityEngine;
 public class RectMove : MonoBehaviour
 {
     [Header("Transform Variable")]
-    private RectTransform rectTransform;
+    protected RectTransform rectTransform;
 
-    private void Awake() {
+    protected void Awake() {
         rectTransform = GetComponent<RectTransform>();
     }
 
