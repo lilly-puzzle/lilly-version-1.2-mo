@@ -6,6 +6,9 @@ public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager instance;
 
+    [Header("Object Variables")]
+    [SerializeField] private List<GameObject> inventoryObj;
+
     [Header("Variables")]
     private bool isChanged = false;
 
@@ -32,6 +35,17 @@ public class InventoryManager : MonoBehaviour
 
     private void LoadInventoryData() {
         playerInventory = DataManager.gameData.characterData.playerInventory;
+    }
+
+    // activate inventory
+    public void ActivateInventory(bool a_needToActivate, int a_sceneNum) {
+        if (a_needToActivate) {
+            inventoryObj[a_sceneNum].SetActive(true);
+        } else {
+            foreach (GameObject inv in inventoryObj) {
+                inv.SetActive(false);
+            }
+        }
     }
 
     // about item
