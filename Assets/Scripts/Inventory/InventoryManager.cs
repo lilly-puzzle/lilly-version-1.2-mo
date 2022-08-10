@@ -71,6 +71,8 @@ public class InventoryManager : MonoBehaviour
         if (a_needToActivate) {
             sceneNum = a_sceneNum - DefaultData.MAP_SCENE_IDX_NUM;
             inventoryObj[a_sceneNum].SetActive(true);
+
+            UpdateSlot();
         } else {
             foreach (GameObject inv in inventoryObj) {
                 inv.SetActive(false);
