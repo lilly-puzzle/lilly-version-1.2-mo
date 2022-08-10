@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
@@ -12,11 +13,20 @@ public class InventoryManager : MonoBehaviour
         public List<ItemSpriteByPuzzle> spriteByPuzzle;
     }
 
+    [System.Serializable] private class ItemScriptPerScene {
+        public List<INItemControl> itemScript;
+    }
+
     public static InventoryManager instance;
 
     [Header("Variables")]
     private bool isChanged = false;
     public int curSelectedItem { get; private set; }
+    private int sceneNum;
+    private PriorityQueue<int> popedItemIdx = new PriorityQueue<int>();
+    private int[] slotStartIdx = new int[2];
+    // setter
+    public void SetIsChanged(bool a_isChanged) { isChanged = a_isChanged; }
 
     [Header("Sprite Variables")]
     [SerializeField] private List<ItemSpritePerFloor> itemSprite;
@@ -27,9 +37,7 @@ public class InventoryManager : MonoBehaviour
 
     [Header("Script Variables")]
     private INZoomControl zoomScript;
-
-    // setter
-    public void SetIsChanged(bool a_isChanged) { isChanged = a_isChanged; }
+    [SerializeField] private List<ItemScriptPerScene> itemScriptPerScene;
 
     [Header("InventoryData Variables")]
     private List<int> playerInventory;
@@ -55,9 +63,10 @@ public class InventoryManager : MonoBehaviour
         playerInventory = DataManager.gameData.characterData.playerInventory;
     }
 
-    // activate inventory
+    // activate inventory when scene change
     public void ActivateInventory(bool a_needToActivate, int a_sceneNum) {
         if (a_needToActivate) {
+            sceneNum = a_sceneNum - DefaultData.MAP_SCENE_IDX_NUM;
             inventoryObj[a_sceneNum].SetActive(true);
         } else {
             foreach (GameObject inv in inventoryObj) {
@@ -66,13 +75,42 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    // about item
-    public void PushItem(int a_itemCode) {
-        playerInventory.Add(a_itemCode);
+    // about slot
+    public bool PushItem(int a_itemCode) {
+        int expectedSlotIdx;
+
+        if (popedItemIdx.Count != 0) {
+            int firstPopIdx = popedItemIdx.Pop();
+            playerInventory[firstPopIdx] = a_itemCode;
+
+            expectedSlotIdx = firstPopIdx - slotStartIdx[sceneNum];
+        } else if (DefaultData.SIZE_OF_INVENTORY <= playerInventory.Count) {
+            return false;
+        } else {
+            playerInventory.Add(a_itemCode);
+
+            expectedSlotIdx = playerInventory.Count - slotStartIdx[sceneNum] - 1;
+        }
+
+        if (IsInSlotRange(expectedSlotIdx, DefaultData.NUM_OF_INVENTORY_SLOT[sceneNum])) {
+            ShowItem(expectedSlotIdx, a_itemCode);
+        }
+
+        return true;
     }
 
-    public void PopItem(int a_itemCode) {
-        // find idx, and if exists, pop
+    public void PopItem() {
+        if (curSelectedItem == -1) return;
+
+        int idxOfItem = playerInventory.IndexOf(curSelectedItem);
+
+        curSelectedItem = -1;
+
+        playerInventory[idxOfItem] = -1;
+        popedItemIdx.Add(idxOfItem);
+
+        int expectedSlotIdx = idxOfItem - slotStartIdx[sceneNum];
+        ShowItem(expectedSlotIdx, -1);
     }
 
     public void SelectItem(int a_itemCode) {
@@ -88,5 +126,33 @@ public class InventoryManager : MonoBehaviour
         } else {
             curSelectedItem = (curSelectedItem != a_itemCode) ? a_itemCode : -1;
         }
+    }
+
+    private void ShowItem(int a_slotIdx, int a_itemCode) {
+        if (a_itemCode == -1) {
+            itemScriptPerScene[sceneNum].itemScript[a_slotIdx].SetItem(a_itemCode, null);
+            return;
+        }
+
+        int floorNum = a_itemCode / 10000;
+        int puzzleNum = a_itemCode % 10000 / 100;
+        int itemNum = a_itemCode % 10000 % 100;
+        
+        itemScriptPerScene[sceneNum].itemScript[a_slotIdx].SetItem(a_itemCode, itemSprite[floorNum].spriteByPuzzle[puzzleNum].spriteList[itemNum]);
+    }
+
+    public void UpdateSlot() {
+        int startIdx = slotStartIdx[sceneNum];
+
+        for (int i = 0; i < DefaultData.NUM_OF_INVENTORY_SLOT[sceneNum]; i++) {
+            int slotIdx = startIdx + i;
+            ShowItem(slotIdx, playerInventory[slotIdx]);
+        }
+    }
+
+    // function to check
+    private bool IsInSlotRange(int a_expectedIdx, int a_numOfSlot) {
+        if (0 <= a_expectedIdx && a_expectedIdx < a_numOfSlot) return true;
+        else return false;
     }
 }
