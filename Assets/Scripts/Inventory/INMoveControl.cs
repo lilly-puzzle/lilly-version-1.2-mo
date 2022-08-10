@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class INMoveControl : RectMove
 {
     [Header("Const Variables")]
-    private const int MAP_SCENE_NUM = 2;
     private readonly List<List<Vector3>> INVENTORY_POSITION = new List<List<Vector3>>
     {
         new List<Vector3> {
@@ -28,15 +27,15 @@ public class INMoveControl : RectMove
     private new void Awake() {
         base.Awake();
 
-        // curSceneNum = SceneManager.GetActiveScene().buildIndex;
-        curSceneNum = 3;
+        // curSceneNum = SceneManager.GetActiveScene().buildIndex - MAP_SCENE_NUM;
+        curSceneNum = 2 - DefaultData.MAP_SCENE_IDX_NUM;
     }
 
     // called by ButtonControl
     public void ToggleInventoryPosition(bool a_isInvEnable) {
         if (coroutine != null) { StopCoroutine(coroutine); }
 
-        Vector3 targetPosition = INVENTORY_POSITION[curSceneNum - MAP_SCENE_NUM][a_isInvEnable ? 1 : 0];
+        Vector3 targetPosition = INVENTORY_POSITION[curSceneNum][a_isInvEnable ? 1 : 0];
         coroutine = SmoothMove(0.5f, targetPosition);
 
         StartCoroutine(coroutine);
