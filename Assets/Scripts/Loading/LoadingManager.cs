@@ -26,7 +26,6 @@ public class LoadingManager : MonoBehaviour
 
     private IEnumerator LoadingAnimation(){
         yield return StartCoroutine(FadeIn());
-        yield return StartCoroutine(Rotation());
     }
 
     private IEnumerator FadeIn(){
@@ -64,6 +63,7 @@ public class LoadingManager : MonoBehaviour
     }
 
     private void GoToMap(){
+        Debug.Log("GoToMap");
         TransitionManager.instance.SceneTransition("MapScene");
     }
 }
