@@ -24,9 +24,10 @@ public class InventoryManager : MonoBehaviour
     public int curSelectedItem { get; private set; }
     private int sceneNum;
     private PriorityQueue<int> popedItemIdx = new PriorityQueue<int>();
-    private int[] slotStartIdx = new int[2];
+    public int[] slotStartIdx { get; private set; }
     // setter
     public void SetIsChanged(bool a_isChanged) { isChanged = a_isChanged; }
+    public void SetSlotStartIdx(int a_startIdx) { slotStartIdx[sceneNum] = a_startIdx; }
 
     [Header("Sprite Variables")]
     [SerializeField] private List<ItemSpritePerFloor> itemSprite;
@@ -46,6 +47,8 @@ public class InventoryManager : MonoBehaviour
         instance = this;
 
         zoomScript = zoomObj.GetComponent<INZoomControl>();
+
+        slotStartIdx = new int[2] { 0, 0 };
     }
 
     private void Start() {
