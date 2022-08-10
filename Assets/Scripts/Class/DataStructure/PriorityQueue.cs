@@ -3,6 +3,7 @@
 // Create : 2015-7-23
 // Last Modify : 2015-7-27
 // Notes : Made for A* algorithm
+// Link : https://skyrack.tistory.com/165
 //==================================
 
 using UnityEngine;
