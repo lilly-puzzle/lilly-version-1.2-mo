@@ -74,9 +74,19 @@ public class TransitionManager : MonoBehaviour
 
     private void ActivateScene(){
         op.allowSceneActivation = true;
-        if(destSceneName == "Puzzle"){
+        
+        if(destSceneName == "MapScene"){
+            InventoryManager.instance.ActivateInventory(true, 2);
+        }
+        else if(destSceneName == "PuzzleScene"){
+            InventoryManager.instance.ActivateInventory(true, 3);
             // PuzzleManager.AwakePuzzle();
         }
+        else{
+            InventoryManager.instance.ActivateInventory(false, -1);
+        }
+
+
     }
 
     private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1){
