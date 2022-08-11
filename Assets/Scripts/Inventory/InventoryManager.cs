@@ -153,10 +153,11 @@ public class InventoryManager : MonoBehaviour
 
     public void UpdateSlot() {
         int startIdx = slotStartIdx[sceneNum];
+        int numOfItemInInventory = playerInventory.Count;
 
         for (int i = 0; i < DefaultData.NUM_OF_INVENTORY_SLOT[sceneNum]; i++) {
             int slotIdx = startIdx + i;
-            ShowItem(slotIdx, playerInventory[slotIdx]);
+            ShowItem(slotIdx, (slotIdx < numOfItemInInventory) ? playerInventory[slotIdx] : -1);
         }
     }
 
