@@ -34,7 +34,6 @@ public class InventoryManager : MonoBehaviour
 
     [Header("Object Variables")]
     [SerializeField] private GameObject canvasObj;
-    [SerializeField] private List<GameObject> inventoryObj;
     [SerializeField] private GameObject zoomObj;
 
     [Header("Script Variables")]
@@ -74,14 +73,10 @@ public class InventoryManager : MonoBehaviour
         if (a_needToActivate) {
             canvasObj.SetActive(true);
             sceneNum = a_sceneNum - DefaultData.MAP_SCENE_IDX_NUM;
-            inventoryObj[sceneNum].SetActive(true);
 
             UpdateSlot();
         } else {
             canvasObj.SetActive(false);
-            foreach (GameObject inv in inventoryObj) {
-                inv.SetActive(false);
-            }
         }
     }
 
