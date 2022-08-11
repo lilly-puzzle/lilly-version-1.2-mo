@@ -4717,6 +4717,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemSprite: []
+  canvasObj: {fileID: 1961985852}
   inventoryObj:
   - {fileID: 386687564}
   - {fileID: 1262382795}
