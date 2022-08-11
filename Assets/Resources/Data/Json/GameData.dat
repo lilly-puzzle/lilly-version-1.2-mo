@@ -1,1 +1,1 @@
-{"newGame":false,"settingData":{"soundSetting":{"isMute":false,"masterVolume":50,"bgmVolume":57,"effectVolume":55}},"characterData":{"characterPos":{"curFloor":1,"curPosX":0.0},"playerInventory":[10503,10503,10503]},"playData":{"clearedPuzzle":[0,0,0,0,0]}}
+{"newGame":false,"settingData":{"soundSetting":{"isMute":false,"masterVolume":50,"bgmVolume":57,"effectVolume":55}},"characterData":{"characterPos":{"curFloor":1,"curPosX":0.0},"playerInventory":[]},"playData":{"clearedPuzzle":[0,0,0,0,0]}}

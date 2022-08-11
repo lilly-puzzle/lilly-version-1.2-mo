@@ -68,6 +68,6 @@ public class ItemLinkManager : MonoBehaviour
         int del_floor = itemcode / 10000;
         int del_puzzle = (itemcode % 10000) / 100;
         itemStatus[del_floor, del_puzzle] = itemStatus[del_floor, del_puzzle]^(1<<itemcode);
-        
+        DataManager.instance.SetActiveObject(itemStatus);
     }
 }
