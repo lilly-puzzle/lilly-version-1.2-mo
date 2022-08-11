@@ -135,7 +135,7 @@ public class InventoryManager : MonoBehaviour
 
     private void ShowItem(int a_slotIdx, int a_itemCode) {
         if (a_itemCode == -1) {
-            itemScriptPerScene[sceneNum].itemScript[a_slotIdx].SetItem(a_itemCode, null);
+            itemScriptPerScene[sceneNum].itemScript[a_slotIdx].SetItem(-1, null);
             return;
         }
 
@@ -152,7 +152,7 @@ public class InventoryManager : MonoBehaviour
 
         for (int i = 0; i < DefaultData.NUM_OF_INVENTORY_SLOT[sceneNum]; i++) {
             int slotIdx = startIdx + i;
-            ShowItem(slotIdx, (slotIdx < numOfItemInInventory) ? playerInventory[slotIdx] : -1);
+            ShowItem(i, (slotIdx < numOfItemInInventory) ? playerInventory[slotIdx] : -1);
         }
     }
 
