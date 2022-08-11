@@ -71,4 +71,8 @@ public class DataManager : MonoBehaviour
     public void SetInventoryData(List<int> a_playerInventory) {
         gameData.characterData.playerInventory = a_playerInventory;
     }
+
+    public void SetActiveObject(int[,] a_activeObject) {
+        gameData.playData.activeObject = a_activeObject;
+    }
 }
