@@ -33,6 +33,7 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] private List<ItemSpritePerFloor> itemSprite;
 
     [Header("Object Variables")]
+    [SerializeField] private GameObject canvasObj;
     [SerializeField] private List<GameObject> inventoryObj;
     [SerializeField] private GameObject zoomObj;
 
@@ -49,6 +50,8 @@ public class InventoryManager : MonoBehaviour
         zoomScript = zoomObj.GetComponent<INZoomControl>();
 
         slotStartIdx = new int[2] { 0, 0 };
+
+        DontDestroyOnLoad(this.gameObject);
     }
 
     private void Start() {
@@ -69,11 +72,13 @@ public class InventoryManager : MonoBehaviour
     // activate inventory when scene change
     public void ActivateInventory(bool a_needToActivate, int a_sceneNum) {
         if (a_needToActivate) {
+            canvasObj.SetActive(true);
             sceneNum = a_sceneNum - DefaultData.MAP_SCENE_IDX_NUM;
             inventoryObj[a_sceneNum].SetActive(true);
 
             UpdateSlot();
         } else {
+            canvasObj.SetActive(false);
             foreach (GameObject inv in inventoryObj) {
                 inv.SetActive(false);
             }
