@@ -84,24 +84,15 @@ public class MoveManager : MonoBehaviour
         }
 
         // Player Position
-        if(playerObject.transform.position.x >= moveLimit[1]) {
-            playerObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
-            playerObject.transform.position = new Vector3(moveLimit[1], floorPos[playerOnFloor].y, floorPos[playerOnFloor].z);
+
+        if (this.selectedDir == Player_Dir.Right){
+            playerObject.GetComponent<Rigidbody2D>().velocity = new Vector2(1.0f * speed, 0);
         }
-        else if(playerObject.transform.position.x <= moveLimit[0]){
-            playerObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
-            playerObject.transform.position = new Vector3(moveLimit[0], floorPos[playerOnFloor].y, floorPos[playerOnFloor].z);
+        else if (this.selectedDir == Player_Dir.Left){
+            playerObject.GetComponent<Rigidbody2D>().velocity = new Vector2(-1.0f * speed, 0);
         }
         else{
-            if (this.selectedDir == Player_Dir.Right){
-                playerObject.GetComponent<Rigidbody2D>().velocity = new Vector2(1.0f * speed, 0);
-            }
-            else if (this.selectedDir == Player_Dir.Left){
-                playerObject.GetComponent<Rigidbody2D>().velocity = new Vector2(-1.0f * speed, 0);
-            }
-            else{
-                playerObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f * speed, 0);
-            }
+            playerObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f * speed, 0);
         }
 
         // For Updown Button
@@ -160,6 +151,27 @@ public class MoveManager : MonoBehaviour
                 selectedStep = Player_Steps.Decel;
             }
         }
+
+        if (this.selectedDir == Player_Dir.Right){
+            if (playerObject.transform.position.x >= moveLimit[1]){
+                if (speed <= 0.0f){
+                    selectedStep = Player_Steps.Idle;
+                }
+                else{
+                    selectedStep = Player_Steps.Decel;
+                }
+            }
+        }
+        if (this.selectedDir == Player_Dir.Left){
+            if (playerObject.transform.position.x <= moveLimit[0]){
+                if (speed <= 0.0f){
+                    selectedStep = Player_Steps.Idle;
+                }
+                else{
+                    selectedStep = Player_Steps.Decel;
+                }
+            }
+        }
     }  
 
     public void SetTransparent(){
@@ -196,7 +208,6 @@ public class MoveManager : MonoBehaviour
     }
 
     public Vector3 GetPlayerPos(){ 
-        Debug.Log("playerpos " + playerObject.transform.position);
         return playerObject.transform.position;
     }
 

@@ -54,7 +54,6 @@ public class JoystickManager : MonoBehaviour
                 presentTouchPos = touch.position;
                 distance = Vector2.Distance(initialTouchPos, presentTouchPos);
                 if(isJoystickAct == false && distance > minRadius){
-                    Debug.Log("ShowJoystick");
                     ShowJoystick(initialTouchPos);
                 }
             }
