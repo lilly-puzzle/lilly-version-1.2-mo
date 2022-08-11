@@ -10,8 +10,10 @@ public class ZoomTouchManager : MonoBehaviour
 
     [SerializeField] private MapCameraManager mapCameraManager;
 
-    // SimpleOneTouch
-    void SimpleOneTouch(){
-        mapCameraManager.ZoomIn(zoomPosX, zoomPosY, zoomSize);
+
+    void OnMouseUp(){
+        if(!JoystickManager.instance.GetisJoystickAct()){
+            mapCameraManager.ZoomIn(zoomPosX, zoomPosY, zoomSize);
+        }
     }
 }

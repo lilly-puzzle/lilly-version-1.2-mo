@@ -5,8 +5,11 @@ using UnityEngine;
 public class PuzzleLinkControl : MonoBehaviour
 {
     public int PuzzleCode;
-    private void FuncWhenTouched(){
-        PlayerPrefs.SetInt("PuzzleCode", PuzzleCode);
-        TransitionManager.instance.SceneTransition("PuzzleScene");
+
+    void OnMouseUp(){
+        if(!JoystickManager.instance.GetisJoystickAct()){
+            PlayerPrefs.SetInt("PuzzleCode", PuzzleCode);
+            TransitionManager.instance.SceneTransition("PuzzleScene");
+        }
     }
 }

@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class JoystickManager : MonoBehaviour
 {
+    public static JoystickManager instance;
+    
     [Header("Script Variable")]
     [SerializeField] private MapCameraManager mapCameraManager;
     
@@ -29,6 +31,7 @@ public class JoystickManager : MonoBehaviour
     private Coroutine fadeCoroutine;
 
     void Awake(){
+        instance = this;
         joystickObject.SetActive(false);
     }
 

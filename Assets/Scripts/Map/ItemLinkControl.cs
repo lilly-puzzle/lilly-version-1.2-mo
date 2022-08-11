@@ -7,12 +7,14 @@ public class ItemLinkControl : MonoBehaviour
     
     [SerializeField] public int ItemCode;
     [SerializeField] private bool isOneTime;
-    
-    private void FuncWhenTouched(){
-        //InventoryManager.AddItemInSlot(ItemCode);
-        if (isOneTime){
-            ItemLinkManager.instance.deleteItem(ItemCode);
-            this.gameObject.SetActive(false);
+
+    void OnMouseUp(){
+        if(!JoystickManager.instance.GetisJoystickAct()){
+            InventoryManager.instance.PushItem(ItemCode);
+            if (isOneTime){
+                ItemLinkManager.instance.deleteItem(ItemCode);
+                this.gameObject.SetActive(false);
+            }
         }
     }
 }

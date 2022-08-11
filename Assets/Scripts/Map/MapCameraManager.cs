@@ -14,6 +14,7 @@ public class MapCameraManager : MonoBehaviour
     [Header("Object Variable")]
     [SerializeField] private GameObject mainCameraObject;
     private Camera mainCamera;
+    [SerializeField] private GameObject[] zoomTouchObject;
 
     [Header("Constant Variable")]
     private readonly Vector3 initialCamera = new Vector3(0, 0, -10);
@@ -81,18 +82,26 @@ public class MapCameraManager : MonoBehaviour
     }
 
     public void ZoomIn(float posX, float posY, float zoomSize){
+        zoomTouchObject[DataManager.gameData.characterData.characterPos.curFloor - 1].SetActive(false);
         cameraOnPlayer = false;
         cameraPos = mainCameraObject.transform.position;
         cameraSize = mainCamera.orthographicSize;
-        ZoomManager.instance.Zoom(true, posX, posY, zoomSize);
+        ZoomManager.instance.Zoom(true, posX, posY, zoomSize, ZoomInCurtain);
+    }
+
+    public void ZoomOut(){
+        zoomTouchObject[DataManager.gameData.characterData.characterPos.curFloor - 1].SetActive(true);
+        ZoomManager.instance.Zoom(false, cameraPos.x, cameraPos.y, cameraSize, ZoomOutCurtain);
+    }
+
+    private void ZoomInCurtain(){
         moveManager.SetTransparent();
         backButtonManager.MakeBackButton();
     }
 
-    public void ZoomOut(){
-        cameraOnPlayer =true;
-        ZoomManager.instance.Zoom(false, cameraPos.x, cameraPos.y, cameraSize);
+    private void ZoomOutCurtain(){
         moveManager.SetVisible();
         backButtonManager.DeleteBackButton();
+        cameraOnPlayer =true;
     }
 }

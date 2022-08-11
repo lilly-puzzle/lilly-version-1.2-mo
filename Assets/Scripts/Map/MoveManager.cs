@@ -32,7 +32,7 @@ public class MoveManager : MonoBehaviour
     [Header("Constant Variable")]
     [SerializeField] private const float maxSpeed = 8.0f;
     [SerializeField] private const float speedUnit = 10.0f;
-    [SerializeField] private readonly float[] moveLimit = {-1.0f, 38.0f};    // [0] is Left Limit, [1] is Right Limit  
+    [SerializeField] private readonly float[] moveLimit = {-38.0f, 38.0f};    // [0] is Left Limit, [1] is Right Limit  
     [SerializeField] private const float updownButtonMakeLine = 35.0f;
     [SerializeField] private readonly Vector3[] floorPos = {Vector3.zero, new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.0f, 10.0f, 0.0f), new Vector3(0.0f, 20.0f, 0.0f), new Vector3(0.0f, 30.0f, 0.0f)}; // Start from 1
 

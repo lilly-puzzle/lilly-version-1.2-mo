@@ -63,7 +63,6 @@ public class LoadingManager : MonoBehaviour
     }
 
     private void GoToMap(){
-        Debug.Log("GoToMap");
         TransitionManager.instance.SceneTransition("MapScene");
     }
 }
