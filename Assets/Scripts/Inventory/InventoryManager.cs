@@ -74,7 +74,7 @@ public class InventoryManager : MonoBehaviour
         if (a_needToActivate) {
             canvasObj.SetActive(true);
             sceneNum = a_sceneNum - DefaultData.MAP_SCENE_IDX_NUM;
-            inventoryObj[a_sceneNum].SetActive(true);
+            inventoryObj[sceneNum].SetActive(true);
 
             UpdateSlot();
         } else {
