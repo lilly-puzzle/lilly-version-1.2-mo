@@ -2,18 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using DataFrame;
+
 public class PuzzleManager : MonoBehaviour
 {
+    [System.Serializable] private class PuzzlePrefabByFloor {
+        public List<GameObject> puzzlePrefab;
+    }
+
     public static PuzzleManager instance;
 
-    [Header("Variables")]
-    private bool isChanged = false;
-
-    // setter
-    public void SetIsChanged(bool a_isChanged) { isChanged = a_isChanged; }
+    [Header("Object Variables")]
+    [SerializeField] private List<PuzzlePrefabByFloor> puzzlePrefabByFloor;
+    private GameObject activePuzzleObject;
 
     [Header("PlayData Variables")]
     private int[] clearedPuzzle;
+    private PuzzleData puzzleData;
 
     private void Awake() {
         instance = this;
@@ -25,18 +30,34 @@ public class PuzzleManager : MonoBehaviour
 
     // save & load
     public void SavePuzzleData() {
-        if (isChanged) {
-            DataManager.instance.SetPuzzleData(clearedPuzzle);
-        }
+        DataManager.instance.SetPuzzleData(clearedPuzzle, puzzleData);
     }
 
     private void LoadPuzzleData() {
         clearedPuzzle = DataManager.gameData.playData.clearedPuzzle;
+        puzzleData = DataManager.gameData.playData.puzzleData;
+    }
+
+    private void SaveActivePuzzleData() {
+        PuzzleMainController mainController = activePuzzleObject.GetComponent<PuzzleMainController>();
+        mainController.SaveEachPuzzleData(puzzleData);
     }
 
     // start puzzle
     public void AwakePuzzle() {
+        int puzzleCodeToRun = GetPuzzleCode();
+        ActivateController(puzzleCodeToRun);
+    }
 
+    private int GetPuzzleCode() {
+        return PlayerPrefs.GetInt("Puzzle Code", -1);
+    }
+
+    private void ActivateController(int a_puzzleCode) {
+        int floorNum = a_puzzleCode / 100;
+        int puzzleNum = a_puzzleCode % 100;
+
+        activePuzzleObject = Instantiate(puzzlePrefabByFloor[floorNum].puzzlePrefab[puzzleNum]);
     }
 
     // about puzzle clear
