@@ -18,7 +18,7 @@ public class PuzzleManager : MonoBehaviour
 
     [Header("PlayData Variables")]
     private int[] clearedPuzzle;
-    private PuzzleData puzzleData;
+    public PuzzleData puzzleData { get; private set; }
 
     private void Awake() {
         instance = this;
