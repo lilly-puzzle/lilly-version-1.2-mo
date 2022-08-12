@@ -64,8 +64,9 @@ public class DataManager : MonoBehaviour
         gameData.settingData.soundSetting.effectVolume = a_effectVolume;
     }
 
-    public void SetPuzzleData(int[] a_clearedPuzzle) {
+    public void SetPuzzleData(int[] a_clearedPuzzle, PuzzleData a_puzzleData) {
         gameData.playData.clearedPuzzle = a_clearedPuzzle;
+        gameData.playData.puzzleData = a_puzzleData;
     }
 
     public void SetInventoryData(List<int> a_playerInventory) {
