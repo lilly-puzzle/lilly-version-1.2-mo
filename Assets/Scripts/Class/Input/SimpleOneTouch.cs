@@ -6,7 +6,7 @@ public class SimpleOneTouch : MonoBehaviour
 {
     /// <see href="https://answers.unity.com/questions/1126621/best-way-to-detect-touch-on-a-gameobject.html"/>
 
-    private Vector3 touchPosWorld;
+    protected Vector3 touchPosWorld;
  
     private const TouchPhase touchPhaseBegan = TouchPhase.Began;
     private const TouchPhase touchPhaseMoved = TouchPhase.Moved;
