@@ -9,8 +9,11 @@ using SaveDataPerPuzzle.Floor4;
 namespace PuzzleDataByFloor
 {
     [System.Serializable] public class Floor1 {
+        public MainPuzzle1Data saveMainPuzzle1;
+        public LPposeData saveLPpose;
         public Floor1() {
-            
+            saveMainPuzzle1 = new MainPuzzle1Data();
+            saveLPpose = new LPposeData();
         }
     }
 
