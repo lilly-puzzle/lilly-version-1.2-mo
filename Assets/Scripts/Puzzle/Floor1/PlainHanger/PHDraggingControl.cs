@@ -6,8 +6,6 @@ public class PHDraggingControl : SimpleOneTouch
 {
     // [Header("Variables")]
     public static int clothesCode { get; private set; }
-    // setter
-    public void SetClothes(int a_clothesCode) { clothesCode = a_clothesCode; }
 
     [Header("Sprite Variables")]
     private SpriteRenderer spriteRenderer;
@@ -33,5 +31,10 @@ public class PHDraggingControl : SimpleOneTouch
 
     private void FixedUpdate() {
         transform.position = ray;
+    }
+
+    public void SetClothes(int a_clothesCode, Sprite a_sprite) {
+        clothesCode = a_clothesCode;
+        SetSprite(a_sprite);
     }
 }
