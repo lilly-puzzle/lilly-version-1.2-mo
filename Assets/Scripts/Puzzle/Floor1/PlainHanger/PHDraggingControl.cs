@@ -18,11 +18,20 @@ public class PHDraggingControl : SimpleOneTouch
         spriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
     }
 
-    private void FixedUpdate() {
-        transform.position = touchPosWorld;
+    private void LateUpdate() {
+        if (touchPhase != touchPhaseEnded) return;
+
+        PHHangerControl hanger = null;
+        if (col != null) hanger = col.GetComponent<PHHangerControl>();
+
+        if (hanger == null) {
+            // TODO: clutter 재활성화 & dragging 비활성화
+        } else {
+            // TODO: 옷걸기
+        }
     }
 
-    protected override void FuncWhenTouchEnded() {
-        gameObject.SetActive(false);
+    private void FixedUpdate() {
+        transform.position = ray;
     }
 }
