@@ -22,12 +22,13 @@ public class PlainHanger : PuzzleMainController
     private const int NUM_OF_HANGER = 8;
     private const int NUM_OF_HANGER_TYPE = 2;
     private const int NUM_OF_HANGER_NUM = 4;
-    private const int ANS_BIT_VALUE = (1 << 8) - 1;
+    private const int ANS_BIT_MASK = (1 << 8) - 1;
 
     [Header("Variables")]
     private int numOfCorrectClothes;
     private List<List<int>> hangingClothesCode;
     public bool isDragging { get; private set; }
+    public bool isCleared { get; private set; }
 
     [Header("Sprite Variables")]
     [SerializeField] private List<ClothesSprite> hangerWithClothes;
@@ -61,6 +62,8 @@ public class PlainHanger : PuzzleMainController
                 if (result) numOfCorrectClothes |= (1 << (hangerType - 1) * NUM_OF_HANGER_NUM + clothesNum);
             }
         }
+
+        CheckIfClear();
     }
 
     public void StartToDragClothes(int a_clothesCode) {
@@ -99,10 +102,15 @@ public class PlainHanger : PuzzleMainController
         bool result;
         result = hanger.HangingClothes(a_clothesCode, hangerWithClothes[clothesType].spriteList[clothesNum]);
 
-        numOfCorrectClothes &= ANS_BIT_VALUE - (1 << shiftIdx);
+        numOfCorrectClothes &= ANS_BIT_MASK - (1 << shiftIdx);
         if (result) numOfCorrectClothes |= (1 << shiftIdx);
 
-        if (numOfCorrectClothes == ANS_BIT_VALUE) {
+        CheckIfClear();
+    }
+
+    private void CheckIfClear() {
+        if (numOfCorrectClothes == ANS_BIT_MASK) {
+            isCleared = true;
             PuzzleClear();
         }
     }
