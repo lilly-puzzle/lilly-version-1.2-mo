@@ -7,6 +7,8 @@ public class PHHangerControl : SimpleOneTouch
     [Header("Variables")]
     [SerializeField] private int hangerCode;
     private int hangingClothesCode = -1;
+    // getter
+    public int GetHangerCode() { return hangerCode; }
 
     [Header("Sprite Variables")]
     [SerializeField] private Sprite hangerSprite;
@@ -20,9 +22,10 @@ public class PHHangerControl : SimpleOneTouch
 
     protected override void FuncWhenTouchEnded() {
         if (PlainHanger.instance.isCleared) return;
-        
+
         if (!PlainHanger.instance.isDragging && hangingClothesCode != -1) {
             HangingClothes(-1, hangerSprite);
+            PlainHanger.instance.RemoveClothesFromHanger(hangerCode, hangingClothesCode);
         }
     }
 
@@ -35,6 +38,8 @@ public class PHHangerControl : SimpleOneTouch
     }
 
     public bool HangingClothes(int a_clothesCode, Sprite a_sprite) {
+        if (hangingClothesCode != -1) PlainHanger.instance.SpecificClothesToClutter(hangingClothesCode);
+
         hangingClothesCode = a_clothesCode;
         SetSprite(a_sprite);
 

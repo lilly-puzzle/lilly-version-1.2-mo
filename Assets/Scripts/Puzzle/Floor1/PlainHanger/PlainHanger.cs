@@ -117,6 +117,28 @@ public class PlainHanger : PuzzleMainController
         if (result) numOfCorrectClothes |= (1 << shiftIdx);
 
         CheckIfClear();
+
+        int hangerCode = hanger.GetHangerCode();
+        int hangerType = hangerCode / 10;
+        int hangerNum = hangerCode % 10;
+
+        hangingClothesCode[hangerType][hangerNum] = a_clothesCode;
+    }
+
+    public void RemoveClothesFromHanger(int a_hangerCode, int a_clothesCode) {
+        SpecificClothesToClutter(a_clothesCode);
+
+        int hangerType = a_hangerCode / 10;
+        int hangerNum = a_hangerCode % 10;
+
+        hangingClothesCode[hangerType][hangerNum] = -1;
+    }
+
+    public void SpecificClothesToClutter(int a_clothesCode) {
+        int clothesType = a_clothesCode / 10;
+        int clothesNum = a_clothesCode % 10;
+
+        clutterObject[clothesType].objectList[clothesNum].SetActive(true);
     }
 
     private void CheckIfClear() {
