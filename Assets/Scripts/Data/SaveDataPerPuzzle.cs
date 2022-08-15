@@ -37,6 +37,26 @@ namespace SaveDataPerPuzzle
             }
         }
 
+        [System.Serializable] public class NameFindingData {
+            public int[,] hotsauceGrid;
+            public int[] completeBugLoc;
+            public int[] completeBugShape;
+            public NameFindingData(){
+                // 0 = not installed, 1 = installed    -1 = None(wall)
+                hotsauceGrid = new int[,] {
+                    { -1, 0, 0, 0, 0, -1 },
+                    { -1, 0, 0, 0, 0, -1 },
+                    { -1, 0, 0, 0, 0, -1 },
+                    { -1, 0, 0, 0, 0, -1 },
+                    { -1, 0, 0, 0, 0, -1 },
+                    { -1, 0, 0, 0, 0, -1 } 
+                };
+                // 0 = not complete, 1 = complete    -1 = None(wall)
+                completeBugLoc = new int[] { -1, 0, 0, 0, 0, -1 };
+                // [1] Triangle [2] Inverse Triangle [3] Rectangle [4] Circle   0 == None, 1 == Complete
+                completeBugShape = new int[5] { -1, 0, 0, 0, 0};
+            }
+        }
     }
 
     namespace Floor2
