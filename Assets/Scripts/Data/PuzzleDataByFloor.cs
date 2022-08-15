@@ -9,8 +9,10 @@ using SaveDataPerPuzzle.Floor4;
 namespace PuzzleDataByFloor
 {
     [System.Serializable] public class Floor1 {
+        public PlainHangerData savePlainHanger;
+
         public Floor1() {
-            
+            savePlainHanger = new PlainHangerData();
         }
     }
 

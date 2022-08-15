@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using DataFrame;
+using SaveDataPerPuzzle.Floor1;
+
 public class PlainHanger : PuzzleMainController
 {
     [System.Serializable] private class ClothesSprite {
@@ -50,8 +53,24 @@ public class PlainHanger : PuzzleMainController
         instance = this;
     }
 
+    public override void SaveEachPuzzleData(PuzzleData a_puzzleData) {
+        PlainHangerData data = a_puzzleData.floor1Data.savePlainHanger;
+
+        data.hangingClothesCode = hangingClothesCode;
+        data.hasPaper = hasPaper;
+    }
+
+    protected override void LoadEachPuzzleData() {
+        PlainHangerData data = PuzzleManager.instance.puzzleData.floor1Data.savePlainHanger;
+
+        hangingClothesCode = data.hangingClothesCode;
+        hasPaper = data.hasPaper;
+    }
+
     protected override void SetupPuz() {
+        numOfCorrectClothes = 0;
         isDragging = false;
+        isCleared = false;
 
         Transform closet = transform.GetChild(1);
         for (int hangerType = 1; hangerType <= NUM_OF_HANGER_TYPE; hangerType++) {
