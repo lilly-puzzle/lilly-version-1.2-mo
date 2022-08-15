@@ -42,7 +42,7 @@ public class PlainHanger : PuzzleMainController
 
     [Header("Script Variables")]
     [SerializeField] private PHDraggingControl draggingScript;
-    [SerializeField] private List<HangerControlScript> hangerScript;
+    [SerializeField] private PHHangerControl dadBottomsHangerScript;
     [SerializeField] private PHPaperControl paperScript;
 
     private new void Awake() {
@@ -53,13 +53,19 @@ public class PlainHanger : PuzzleMainController
     protected override void SetupPuz() {
         isDragging = false;
 
+        Transform closet = transform.GetChild(1);
         for (int hangerType = 1; hangerType <= NUM_OF_HANGER_TYPE; hangerType++) {
+            Transform hangerPerType = closet.GetChild(hangerType);
+
             for (int hangerNum = 0; hangerNum < NUM_OF_HANGER_NUM; hangerNum++) {
                 int clothesCode = hangingClothesCode[hangerType][hangerNum];
                 if (clothesCode == -1) continue;
 
+                PHHangerControl hangerScript = hangerPerType.GetChild(hangerNum).gameObject.GetComponent<PHHangerControl>();
                 int clothesNum = clothesCode % 10;
-                bool result = hangerScript[hangerType].scriptList[hangerNum].HangingClothes(clothesCode, hangerWithClothes[hangerType].spriteList[clothesNum]);
+                bool result;
+
+                result = hangerScript.HangingClothes(clothesCode, hangerWithClothes[hangerType].spriteList[clothesNum]);
                 clutterObject[hangerType].objectList[clothesNum].SetActive(false);
 
                 if (result) numOfCorrectClothes |= (1 << (hangerType - 1) * NUM_OF_HANGER_NUM + clothesNum);
@@ -121,10 +127,7 @@ public class PlainHanger : PuzzleMainController
     }
 
     public void GetPaperFromDadBottoms() {
-        const int bottomsHangerType = 1;
-        const int dadHangerNum = 0;
-
-        hangerScript[bottomsHangerType].scriptList[dadHangerNum].SetSprite(dadBottomsWithoutPaper);
+        dadBottomsHangerScript.SetSprite(dadBottomsWithoutPaper);
 
         hasPaper = false;
     }
