@@ -29,10 +29,12 @@ public class PlainHanger : PuzzleMainController
     private List<List<int>> hangingClothesCode;
     public bool isDragging { get; private set; }
     public bool isCleared { get; private set; }
+    private bool hasPaper;
 
     [Header("Sprite Variables")]
     [SerializeField] private List<ClothesSprite> hangerWithClothes;
     [SerializeField] private List<ClothesSprite> unrolledClothes;
+    [SerializeField] private Sprite dadBottomsWithoutPaper;
 
     [Header("Object Variables")]
     [SerializeField] private List<ClutterObject> clutterObject;
@@ -41,6 +43,7 @@ public class PlainHanger : PuzzleMainController
     [Header("Script Variables")]
     [SerializeField] private PHDraggingControl draggingScript;
     [SerializeField] private List<HangerControlScript> hangerScript;
+    [SerializeField] private PHPaperControl paperScript;
 
     private new void Awake() {
         base.Awake();
@@ -62,6 +65,8 @@ public class PlainHanger : PuzzleMainController
                 if (result) numOfCorrectClothes |= (1 << (hangerType - 1) * NUM_OF_HANGER_NUM + clothesNum);
             }
         }
+
+        paperScript.SetHasPaper(hasPaper);
 
         CheckIfClear();
     }
@@ -113,5 +118,14 @@ public class PlainHanger : PuzzleMainController
             isCleared = true;
             PuzzleClear();
         }
+    }
+
+    public void GetPaperFromDadBottoms() {
+        const int bottomsHangerType = 1;
+        const int dadHangerNum = 0;
+
+        hangerScript[bottomsHangerType].scriptList[dadHangerNum].SetSprite(dadBottomsWithoutPaper);
+
+        hasPaper = false;
     }
 }
