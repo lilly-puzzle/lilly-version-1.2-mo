@@ -9,11 +9,11 @@ public class PlainHanger : PuzzleMainController
     }
 
     [System.Serializable] private class ClutterObject {
-        public List<GameObject> clutterList;
+        public List<GameObject> objectList;
     }
 
     [System.Serializable] private class HangerControlScript {
-        public List<PHHangerControl> hangerList;
+        public List<PHHangerControl> scriptList;
     }
 
     public static PlainHanger instance;
@@ -54,8 +54,8 @@ public class PlainHanger : PuzzleMainController
                 if (clothesCode == -1) continue;
 
                 int clothesNum = clothesCode % 10;
-                bool result = hangerScript[hangerType].hangerList[hangerNum].HangingClothes(clothesCode, hangerWithClothes[hangerType].spriteList[clothesNum]);
-                clutterObject[hangerType].clutterList[clothesNum].SetActive(false);
+                bool result = hangerScript[hangerType].scriptList[hangerNum].HangingClothes(clothesCode, hangerWithClothes[hangerType].spriteList[clothesNum]);
+                clutterObject[hangerType].objectList[clothesNum].SetActive(false);
 
                 if (result) numOfCorrectClothes |= (1 << (hangerType - 1) * NUM_OF_HANGER_NUM + clothesNum);
             }
@@ -70,5 +70,14 @@ public class PlainHanger : PuzzleMainController
 
         draggingObject.SetActive(true);
         draggingScript.SetClothes(a_clothesCode, unrolledClothes[clothesType].spriteList[clothesNum]);
+    }
+
+    public void FailToDragClothes(int a_clothesCode) {
+        isDragging = false;
+
+        int clothesType = a_clothesCode / 10;
+        int clothesNum = a_clothesCode % 10;
+
+        clutterObject[clothesType].objectList[clothesNum].SetActive(true);
     }
 }

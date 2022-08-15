@@ -23,10 +23,12 @@ public class PHDraggingControl : SimpleOneTouch
         if (col != null) hanger = col.GetComponent<PHHangerControl>();
 
         if (hanger == null) {
-            // TODO: clutter 재활성화 & dragging 비활성화
+            PlainHanger.instance.FailToDragClothes(clothesCode);
+            clothesCode = -1;
         } else {
             // TODO: 옷걸기
         }
+        gameObject.SetActive(false);
     }
 
     private void FixedUpdate() {
