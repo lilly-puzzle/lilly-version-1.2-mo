@@ -24,10 +24,10 @@ public class PHDraggingControl : SimpleOneTouch
 
         if (hanger == null) {
             PlainHanger.instance.FailToDragClothes(clothesCode);
-            clothesCode = -1;
         } else {
-            // TODO: 옷걸기
+            PlainHanger.instance.TryToHangClothes(col, clothesCode);
         }
+        clothesCode = -1;
         gameObject.SetActive(false);
     }
 

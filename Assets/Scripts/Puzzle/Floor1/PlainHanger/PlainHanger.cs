@@ -22,6 +22,7 @@ public class PlainHanger : PuzzleMainController
     private const int NUM_OF_HANGER = 8;
     private const int NUM_OF_HANGER_TYPE = 2;
     private const int NUM_OF_HANGER_NUM = 4;
+    private const int ANS_BIT_VALUE = (1 << 8) - 1;
 
     [Header("Variables")]
     private int numOfCorrectClothes;
@@ -79,5 +80,30 @@ public class PlainHanger : PuzzleMainController
         int clothesNum = a_clothesCode % 10;
 
         clutterObject[clothesType].objectList[clothesNum].SetActive(true);
+    }
+
+    public void TryToHangClothes(GameObject a_hangerObject, int a_clothesCode) {
+        isDragging = false;
+
+        PHHangerControl hanger = a_hangerObject.GetComponent<PHHangerControl>();
+
+        if (!hanger.CheckCanHang(a_clothesCode)) {
+            FailToDragClothes(a_clothesCode);
+            return;
+        }
+
+        int clothesType = a_clothesCode / 10;
+        int clothesNum = a_clothesCode % 10;
+        int shiftIdx = (clothesType - 1) * NUM_OF_HANGER_NUM + clothesNum;
+
+        bool result;
+        result = hanger.HangingClothes(a_clothesCode, hangerWithClothes[clothesType].spriteList[clothesNum]);
+
+        numOfCorrectClothes &= ANS_BIT_VALUE - (1 << shiftIdx);
+        if (result) numOfCorrectClothes |= (1 << shiftIdx);
+
+        if (numOfCorrectClothes == ANS_BIT_VALUE) {
+            PuzzleClear();
+        }
     }
 }
