@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlainHanger : PuzzleMainController
 {
-    [System.Serializable] private class HangerWithClothesSprite {
-        public List<Sprite> hangerList;
+    [System.Serializable] private class ClothesSprite {
+        public List<Sprite> spriteList;
     }
 
     [System.Serializable] private class ClutterObject {
@@ -29,7 +29,8 @@ public class PlainHanger : PuzzleMainController
     public bool isDragging { get; private set; }
 
     [Header("Sprite Variables")]
-    [SerializeField] private List<HangerWithClothesSprite> hangerWithClothes;
+    [SerializeField] private List<ClothesSprite> hangerWithClothes;
+    [SerializeField] private List<ClothesSprite> unrolledClothes;
 
     [Header("Object Variables")]
     [SerializeField] private List<ClutterObject> clutterObject;
@@ -53,11 +54,21 @@ public class PlainHanger : PuzzleMainController
                 if (clothesCode == -1) continue;
 
                 int clothesNum = clothesCode % 10;
-                bool result = hangerScript[hangerType].hangerList[hangerNum].HangingClothes(clothesCode, hangerWithClothes[hangerType].hangerList[clothesNum]);
+                bool result = hangerScript[hangerType].hangerList[hangerNum].HangingClothes(clothesCode, hangerWithClothes[hangerType].spriteList[clothesNum]);
                 clutterObject[hangerType].clutterList[clothesNum].SetActive(false);
 
                 if (result) numOfCorrectClothes |= (1 << (hangerType - 1) * NUM_OF_HANGER_NUM + clothesNum);
             }
         }
+    }
+
+    public void StartToDragClothes(int a_clothesCode) {
+        isDragging = true;
+
+        int clothesType = a_clothesCode / 10;
+        int clothesNum = a_clothesCode % 10;
+
+        draggingObject.SetActive(true);
+        draggingScript.SetClothes(a_clothesCode, unrolledClothes[clothesType].spriteList[clothesNum]);
     }
 }

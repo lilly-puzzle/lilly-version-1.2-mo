@@ -8,7 +8,7 @@ public class PHClutterControl : SimpleOneTouch
     [SerializeField] private int clothesCode;
 
     protected override void FuncWhenTouchBegan() {
-        // TODO: 드래그 중인 옷의 sprite 변경 및 활성화
+        PlainHanger.instance.StartToDragClothes(clothesCode);
         gameObject.SetActive(false);
     }
 }

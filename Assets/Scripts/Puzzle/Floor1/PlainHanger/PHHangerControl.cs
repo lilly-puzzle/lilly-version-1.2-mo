@@ -19,9 +19,9 @@ public class PHHangerControl : SimpleOneTouch
     }
 
     protected override void FuncWhenTouchEnded() {
-        // if (!PlainHanger.instance.isDragging && hangingClothesCode != -1) {
+        if (!PlainHanger.instance.isDragging && hangingClothesCode != -1) {
             HangingClothes(-1, hangerSprite);
-        // }
+        }
     }
 
     public bool CheckCanHang(int a_clothesCode) {
