@@ -57,6 +57,18 @@ namespace SaveDataPerPuzzle
                 completeBugShape = new int[5] { -1, 0, 0, 0, 0};
             }
         }
+
+        [System.Serializable] public class MouseHoleData{
+            public int mhCatCondition;
+            public int mhMouseCondition;
+            public int mhPlateCondition;
+
+            public MouseHoleData(){
+                mhCatCondition = 0;
+                mhMouseCondition = 0;
+                mhPlateCondition = 0;
+            }
+        }
     }
 
     namespace Floor2
