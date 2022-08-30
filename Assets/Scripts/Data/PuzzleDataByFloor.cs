@@ -22,8 +22,9 @@ namespace PuzzleDataByFloor
     }
 
     [System.Serializable] public class Floor2 {
+        public ShowCaseData saveShowCase;
         public Floor2() {
-            
+            saveShowCase = new ShowCaseData();
         }
     }
     

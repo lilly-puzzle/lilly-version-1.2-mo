@@ -73,7 +73,16 @@ namespace SaveDataPerPuzzle
 
     namespace Floor2
     {
-
+        [System.Serializable] public class ShowCaseData{
+            public bool scItemAct;
+            public bool scLeftDoorOpen;
+            public bool scRightDoorOpen;
+            public ShowCaseData(){
+                scItemAct = true;
+                scLeftDoorOpen = false;
+                scRightDoorOpen = false;
+            }
+        }
     }
 
     namespace Floor3
