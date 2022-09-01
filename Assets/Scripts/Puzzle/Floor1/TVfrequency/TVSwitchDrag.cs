@@ -14,7 +14,9 @@ public class TVSwitchDrag : SimpleOneTouch
 
     [Header("Variables")]
     private bool isDragging;
-    private int switchIdx;
+    public int switchIdx { get; private set; }
+    // setter
+    public void SetIdx(int a_switchIdx) { switchIdx = a_switchIdx; }
 
     [Header("Script Variables")]
     private TVSwitchMove moveScript;
@@ -67,5 +69,11 @@ public class TVSwitchDrag : SimpleOneTouch
 
     protected override void FuncWhenTouchBegan() {
         isDragging = true;
+    }
+
+    public void SetupPuz() {
+        Vector3 temp = transform.position;
+        temp.y = SWITCH_LOC[switchIdx];
+        transform.position = temp;
     }
 }

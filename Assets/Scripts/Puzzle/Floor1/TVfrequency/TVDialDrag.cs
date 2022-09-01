@@ -15,8 +15,9 @@ public class TVDialDrag : SimpleOneTouch
 
     [Header("Variables")]
     private bool isDragging;
-    private List<float> dialAngle;
-    private int dialIdx;
+    public int dialIdx { get; private set; }
+    // setter
+    public void SetIdx(int a_dialIdx) { dialIdx = a_dialIdx; }
 
     [Header("Script Variables")]
     private TVDialRotate rotateScript;
@@ -53,5 +54,9 @@ public class TVDialDrag : SimpleOneTouch
 
     protected override void FuncWhenTouchBegan() {
         isDragging = true;
+    }
+
+    public void SetupPuz() {
+        transform.eulerAngles = new Vector3(0, 0, DIAL_ANGLE[dialIdx]);
     }
 }

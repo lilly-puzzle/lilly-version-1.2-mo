@@ -13,7 +13,7 @@ public class TVLedControl : MonoBehaviour
         spriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
     }
 
-    public void setColor(bool a_isClear) {
+    public void SetColor(bool a_isClear) {
         if (a_isClear) {
             spriteRenderer.color = greenColor;
         } else {
