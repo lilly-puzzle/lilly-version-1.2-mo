@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class TVSwitchDrag : SimpleOneTouch
 {
+    [Header("Constant Variables")]
+    private readonly List<float> SWITCH_LOC = new List<float> {
+        // TODO: position 좌표 추가
+    };
+    private readonly List<float> POS_BOUNDARY = new List<float> {
+        // TODO: position 좌표 추가
+    };
+
     [Header("Variables")]
     private bool isDragging;
-    private List<float> switchLoc;
-    private List<float> moveBoundary;
     private int switchIdx;
 
     [Header("Script Variables")]
@@ -22,15 +28,15 @@ public class TVSwitchDrag : SimpleOneTouch
 
         if (touchPhase == touchPhaseEnded) {
             switch(ray.y) {
-                case float val when (switchLoc[0] <= val && val <= moveBoundary[0]): {
+                case float val when (SWITCH_LOC[0] <= val && val <= POS_BOUNDARY[0]): {
                     switchIdx = 0;
                     break;
                 }
-                case float val when (moveBoundary[0] < val && val < moveBoundary[1]): {
+                case float val when (POS_BOUNDARY[0] < val && val < POS_BOUNDARY[1]): {
                     switchIdx = 1;
                     break;
                 }
-                case float val when (moveBoundary[1] <= val && val <= switchLoc[2]): {
+                case float val when (POS_BOUNDARY[1] <= val && val <= SWITCH_LOC[2]): {
                     switchIdx = 2;
                     break;
                 }
@@ -41,7 +47,7 @@ public class TVSwitchDrag : SimpleOneTouch
             }
 
             Vector3 temp = transform.position;
-            temp.y = switchLoc[switchIdx];
+            temp.y = SWITCH_LOC[switchIdx];
             moveScript.MoveToPosition(temp);
         }
     }
@@ -51,8 +57,8 @@ public class TVSwitchDrag : SimpleOneTouch
 
         float yCoor = ray.y;
 
-        if (yCoor < moveBoundary[0]) yCoor = moveBoundary[0];
-        else if (moveBoundary[1] < yCoor) yCoor = moveBoundary[1];
+        if (yCoor < POS_BOUNDARY[0]) yCoor = POS_BOUNDARY[0];
+        else if (POS_BOUNDARY[1] < yCoor) yCoor = POS_BOUNDARY[1];
 
         Vector3 temp = transform.position;
         temp.y = yCoor;
