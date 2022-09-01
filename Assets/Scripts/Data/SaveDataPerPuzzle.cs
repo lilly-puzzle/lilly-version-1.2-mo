@@ -18,6 +18,18 @@ namespace SaveDataPerPuzzle
                 hasPaper = true;
             }
         }
+
+        [System.Serializable] public class TVfrequencyData {
+            public int numOfTunedFrequencies;
+            public int curSwitchIdx;
+            public int curDialIdx;
+
+            public TVfrequencyData() {
+                numOfTunedFrequencies = 0;
+                curSwitchIdx = 0;
+                curDialIdx = 0;
+            }
+        }
     }
 
     namespace Floor2

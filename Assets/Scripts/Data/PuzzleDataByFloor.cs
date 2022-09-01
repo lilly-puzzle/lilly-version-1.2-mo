@@ -10,9 +10,11 @@ namespace PuzzleDataByFloor
 {
     [System.Serializable] public class Floor1 {
         public PlainHangerData savePlainHanger;
+        public TVfrequencyData saveTVfrequency;
 
         public Floor1() {
             savePlainHanger = new PlainHangerData();
+            saveTVfrequency = new TVfrequencyData();
         }
     }
 
