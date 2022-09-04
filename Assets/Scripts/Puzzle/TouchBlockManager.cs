@@ -15,15 +15,19 @@ public class TouchBlockManager : MonoBehaviour
         BlockObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 0, -5);
     }
 
-    public void TouchBlock(GameObject touchAbleUI_){
+    public void TouchBlock(GameObject touchAbleUI_ = null){
         BlockObject.SetActive(true);
-        touchAbleUI = touchAbleUI_;
-        savePos = touchAbleUI.GetComponent<RectTransform>().anchoredPosition;
-        touchAbleUI.GetComponent<RectTransform>().anchoredPosition = new Vector3(savePos.x, savePos.y, -6);
+        if(touchAbleUI_ != null){
+            touchAbleUI = touchAbleUI_;
+            savePos = touchAbleUI.GetComponent<RectTransform>().anchoredPosition;
+            touchAbleUI.GetComponent<RectTransform>().anchoredPosition = new Vector3(savePos.x, savePos.y, -6);
+        }
     }
 
     public void TouchBlockEnd(){
         BlockObject.SetActive(false);
-        touchAbleUI.GetComponent<RectTransform>().anchoredPosition = savePos;
+        if(touchAbleUI != null){
+            touchAbleUI.GetComponent<RectTransform>().anchoredPosition = savePos;
+        }
     }
 }

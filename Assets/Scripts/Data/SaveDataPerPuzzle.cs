@@ -83,6 +83,19 @@ namespace SaveDataPerPuzzle
                 scRightDoorOpen = false;
             }
         }
+
+        [System.Serializable] public class KitchenTableData{
+            public int[] ktDishOnTable;
+            public int[] ktSoupOnTable;
+            public bool[] ktPoisionOnTable;
+            public int ktProgress;
+            public KitchenTableData(){
+                ktDishOnTable = new int[4] {0, 0, 0, 0};
+                ktSoupOnTable = new int[4] {0, 0, 0, 0};
+                ktPoisionOnTable = new bool[4] {false, false, false, false};
+                ktProgress = 0;
+            }
+        }
     }
 
     namespace Floor3
