@@ -24,11 +24,8 @@ public class INMoveControl : RectMove
     [Header("Coroutine Variables")]
     private IEnumerator coroutine;
 
-    private new void Awake() {
-        base.Awake();
-
-        // curSceneNum = SceneManager.GetActiveScene().buildIndex - MAP_SCENE_NUM;
-        curSceneNum = 2 - DefaultData.MAP_SCENE_IDX_NUM;
+    public void SetSceneNum() {
+        curSceneNum = SceneManager.GetActiveScene().buildIndex - DefaultData.MAP_SCENE_IDX_NUM;
     }
 
     // called by ButtonControl
