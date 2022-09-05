@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class INMoveControl : RectMove
 {
-    public INMoveControl instance;
+    public static INMoveControl instance;
 
     [Header("Const Variables")]
     private readonly List<List<Vector3>> INVENTORY_POSITION = new List<List<Vector3>>
