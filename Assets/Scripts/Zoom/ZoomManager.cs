@@ -18,6 +18,7 @@ public class ZoomManager : MonoBehaviour
     private const float zoomOutOffset = 0.08f;
     private const float zoomTime = 0.4f;
     private const float blinkTime = 0.3f;
+    private const float fadeTime = 0.5f;
 
     [Header("Variable")]
     private Coroutine blinkCoroutine;
@@ -50,7 +51,7 @@ public class ZoomManager : MonoBehaviour
         if(blinkCoroutine != null){
             StopCoroutine(blinkCoroutine);
         }
-        yield return blinkCoroutine = StartCoroutine(Blink(true));
+        yield return blinkCoroutine = StartCoroutine(BlinkCor(true));
         
         mainCameraObject.transform.position = new Vector3(posX, posY, -10);
         if(curtainFunction != null){
@@ -60,7 +61,7 @@ public class ZoomManager : MonoBehaviour
         if(blinkCoroutine != null){
             StopCoroutine(blinkCoroutine);
         }
-        blinkCoroutine = StartCoroutine(Blink(false));
+        blinkCoroutine = StartCoroutine(BlinkCor(false));
         
 
         // For zoom animation
@@ -79,7 +80,14 @@ public class ZoomManager : MonoBehaviour
         }
     }
 
-    private IEnumerator Blink(bool isBlinkIn){
+    public void Blink(bool isBlinkIn){
+        if(blinkCoroutine != null){
+            StopCoroutine(blinkCoroutine);
+        }
+        blinkCoroutine = StartCoroutine(BlinkCor(isBlinkIn));
+    }
+
+    private IEnumerator BlinkCor(bool isBlinkIn){
         filterObject.SetActive(true);
         Color blinkC = filterImage.color;
         float initA;
@@ -106,4 +114,38 @@ public class ZoomManager : MonoBehaviour
         }
         if(!isBlinkIn) filterObject.SetActive(false);
     }
+
+    public void Fade(bool isFadeIn){
+        if(blinkCoroutine != null){
+            StopCoroutine(blinkCoroutine);
+        }
+        blinkCoroutine = StartCoroutine(FadeCor(isFadeIn));
+    }
+
+    private IEnumerator FadeCor(bool isFadeIn){
+        filterObject.SetActive(true);
+        Color blinkC = filterImage.color;
+        float initA;
+        float destA;
+        if(isFadeIn){
+            initA = 0.0f;
+            destA = 1.0f;
+        }
+        else{
+            initA = 1.0f;
+            destA = 0.0f;
+        }
+
+        float steptimer = 0.0f;
+        while(blinkC.a != destA){
+            float rate = steptimer / fadeTime;
+            rate = Mathf.Min(rate, 1.0f);
+            blinkC.a = Mathf.Lerp(initA, destA, rate);
+            filterImage.color = blinkC;
+            
+            steptimer += Time.unscaledDeltaTime;
+            yield return null;
+        }
+        if(!isFadeIn) filterObject.SetActive(false);
+    } 
 }
