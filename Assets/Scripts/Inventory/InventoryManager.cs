@@ -119,6 +119,8 @@ public class InventoryManager : MonoBehaviour
     }
 
     public void SelectItem(int a_itemCode) {
+        if (a_itemCode == -1) { curSelectedItem = -1; return; }
+        
         int floorNum = a_itemCode / 10000;
         int puzzleNum = a_itemCode % 10000 / 100;
         int itemNum = a_itemCode % 10000 % 100;
