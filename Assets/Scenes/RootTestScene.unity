@@ -4959,6 +4959,12 @@ MonoBehaviour:
   itemSprite: []
   canvasObj: {fileID: 1961985852}
   zoomObj: {fileID: 1126344464}
+  leftBtn:
+  - {fileID: 1126107840}
+  - {fileID: 288255052}
+  rightBtn:
+  - {fileID: 2011124844}
+  - {fileID: 1742116463}
   itemScriptPerScene:
   - itemScript:
     - {fileID: 856751245}
