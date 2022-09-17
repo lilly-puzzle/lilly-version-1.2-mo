@@ -8,7 +8,7 @@ public class PuzzleLinkControl : MonoBehaviour
 
     void OnMouseUp(){
         if(!JoystickManager.instance.GetisJoystickAct()){
-            PlayerPrefs.SetInt("PuzzleCode", PuzzleCode);
+            PlayerPrefs.SetInt("Puzzle Code", PuzzleCode);
             TransitionManager.instance.SceneTransition("PuzzleScene");
         }
     }

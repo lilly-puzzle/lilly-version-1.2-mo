@@ -3,8 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class ObjectFloor{
-    public GameObject[] itemObjects;
+public class ItemFloor{
+    public ItemPuzzle[] itemPuzzle = new ItemPuzzle[16]; 
+}
+
+[System.Serializable]
+public class ItemPuzzle{
+    public GameObject[] itemObject = new GameObject[10];
 }
 
 public class ItemLinkManager : MonoBehaviour
@@ -12,12 +17,10 @@ public class ItemLinkManager : MonoBehaviour
     public static ItemLinkManager instance;
 
     [Header("Object Variable")]
-    [SerializeField] private ObjectFloor[] linkFloor;
-    private ItemLinkControl[,] links = new ItemLinkControl[5, 32];
+    [SerializeField] private ItemFloor[] itemFloor = new ItemFloor[5];
 
     
     [Header("Variable")]
-    private List<int> ActItems = new List<int>();
 
     private int playerOnFloor;
 
@@ -26,7 +29,6 @@ public class ItemLinkManager : MonoBehaviour
     void Awake(){
         instance = this;
         LoadItem();
-        SetUpItem();
     }
 
     private void LoadItem(){
@@ -38,36 +40,28 @@ public class ItemLinkManager : MonoBehaviour
             int itemStatusInPuzzle = itemStatus[playerOnFloor, _puzzle];
 
             for(int _item = 1; _item < 10; _item++){
-                if (((itemStatusInPuzzle >> _item) & 1) == 1)
+                if (((itemStatusInPuzzle >> _item) & 1) == 0)
                 {
                     int temp = playerOnFloor * 10000;
                     temp += _puzzle * 100;
                     temp += _item;
 
-                    ActItems.Add(temp);
-                }
-            }
-        }
-    }
-
-    private void SetUpItem(){
-        for(int linkNum = 0; linkNum < linkFloor[playerOnFloor].itemObjects.GetLength(0); linkNum++){
-            links[playerOnFloor, linkNum] = linkFloor[playerOnFloor].itemObjects[linkNum].GetComponent<ItemLinkControl>();
-            for(int i = 0; i < ActItems.Count; i++){
-                if(links[playerOnFloor, linkNum].ItemCode == ActItems[i]){
-                    linkFloor[playerOnFloor].itemObjects[linkNum].SetActive(true);
-                }
-                else{
-                    linkFloor[playerOnFloor].itemObjects[linkNum].SetActive(false);
+                    if (itemFloor[playerOnFloor].itemPuzzle[_puzzle].itemObject[_item] != null){
+                        itemFloor[playerOnFloor].itemPuzzle[_puzzle].itemObject[_item].SetActive(false);
+                    }
                 }
             }
         }
     }
 
     public void deleteItem(int itemcode){
+        Debug.Log("deleteItem!");
         int del_floor = itemcode / 10000;
         int del_puzzle = (itemcode % 10000) / 100;
-        itemStatus[del_floor, del_puzzle] = itemStatus[del_floor, del_puzzle]^(1<<itemcode);
+        int del_item = (itemcode % 10000) % 100;
+        Debug.Log("F" +itemStatus[del_floor, del_puzzle]);
+        itemStatus[del_floor, del_puzzle] = itemStatus[del_floor, del_puzzle]^(1<<del_item);
         DataManager.instance.SetActiveObject(itemStatus);
+        Debug.Log(itemStatus[del_floor, del_puzzle]);
     }
 }

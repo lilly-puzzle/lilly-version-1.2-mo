@@ -22,6 +22,8 @@ public class PuzzleManager : MonoBehaviour
 
     private void Awake() {
         instance = this;
+
+        DontDestroyOnLoad(this.gameObject);
     }
 
     private void Start() {
@@ -56,8 +58,8 @@ public class PuzzleManager : MonoBehaviour
     private void ActivateController(int a_puzzleCode) {
         int floorNum = a_puzzleCode / 100;
         int puzzleNum = a_puzzleCode % 100;
-
-        activePuzzleObject = Instantiate(puzzlePrefabByFloor[floorNum].puzzlePrefab[puzzleNum]);
+        
+        activePuzzleObject = Instantiate(puzzlePrefabByFloor[floorNum].puzzlePrefab[puzzleNum], GameObject.Find("Puzzle").transform);
     }
 
     // about puzzle clear
