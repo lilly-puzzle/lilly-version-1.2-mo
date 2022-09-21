@@ -39,7 +39,7 @@ public class TransitionManager : MonoBehaviour
         while(!CheckIfDataLoaded()){
             yield return null;
         }
-        ActivateScene();
+        StartCoroutine(ActivateScene());
         yield break;
     }
 
@@ -72,21 +72,22 @@ public class TransitionManager : MonoBehaviour
         return true;
     }
 
-    private void ActivateScene(){
+    private IEnumerator ActivateScene(){
         op.allowSceneActivation = true;
         
+        yield return null;
         if(destSceneName == "MapScene"){
             InventoryManager.instance.ActivateInventory(true, 2);
+            INMoveControl.instance.SetSceneNum(2);
         }
         else if(destSceneName == "PuzzleScene"){
             InventoryManager.instance.ActivateInventory(true, 3);
-            // PuzzleManager.AwakePuzzle();
+            INMoveControl.instance.SetSceneNum(3);
+            PuzzleManager.instance.AwakePuzzle();
         }
         else{
             InventoryManager.instance.ActivateInventory(false, -1);
         }
-
-
     }
 
     private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1){

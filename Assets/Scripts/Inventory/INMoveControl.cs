@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class INMoveControl : RectMove
 {
+    public static INMoveControl instance;
+
     [Header("Const Variables")]
     private readonly List<List<Vector3>> INVENTORY_POSITION = new List<List<Vector3>>
     {
@@ -20,15 +21,15 @@ public class INMoveControl : RectMove
 
     [Header("Variables")]
     private int curSceneNum;
+    // setter
+    public void SetSceneNum(int a_sceneNum) { curSceneNum = a_sceneNum - DefaultData.MAP_SCENE_IDX_NUM; }
 
     [Header("Coroutine Variables")]
     private IEnumerator coroutine;
 
     private new void Awake() {
         base.Awake();
-
-        // curSceneNum = SceneManager.GetActiveScene().buildIndex - MAP_SCENE_NUM;
-        curSceneNum = 2 - DefaultData.MAP_SCENE_IDX_NUM;
+        instance = this;
     }
 
     // called by ButtonControl

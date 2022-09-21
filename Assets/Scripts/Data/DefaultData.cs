@@ -12,6 +12,7 @@ public class DefaultData
 
     public static readonly List<List<int>> ZOOM_OR_NOT = new List<List<int>>
     {
-        new List<int> { }
+        new List<int> { },
+        new List<int> { 0, 2, 0, 4, 0, 0, 0, 0 }
     };
 }
