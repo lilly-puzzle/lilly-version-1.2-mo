@@ -36,10 +36,10 @@ public class ItemLinkManager : MonoBehaviour
 
         itemStatus = DataManager.gameData.playData.activeObject;
 
-        for(int _puzzle = 1; _puzzle < 16; _puzzle++){
+        for(int _puzzle = 1; _puzzle < DefaultData.MAX_NUM_OF_PUZ_PER_FLOOR; _puzzle++){
             int itemStatusInPuzzle = itemStatus[playerOnFloor, _puzzle];
 
-            for(int _item = 1; _item < 10; _item++){
+            for(int _item = 1; _item < DefaultData.MAX_NUM_OF_ITEMS_PER_PUZ; _item++){
                 if (((itemStatusInPuzzle >> _item) & 1) == 0)
                 {
                     int temp = playerOnFloor * 10000;
@@ -55,7 +55,6 @@ public class ItemLinkManager : MonoBehaviour
     }
 
     public void deleteItem(int itemcode){
-        Debug.Log("deleteItem!");
         int del_floor = itemcode / 10000;
         int del_puzzle = (itemcode % 10000) / 100;
         int del_item = (itemcode % 10000) % 100;
