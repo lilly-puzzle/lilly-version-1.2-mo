@@ -75,7 +75,8 @@ public class ZoomManager : MonoBehaviour
             current_zoomsize = Mathf.Lerp(init_zoomsize, zoomSize, rate);
             mainCamera.orthographicSize = current_zoomsize;
             
-            steptimer += Time.unscaledDeltaTime;
+            //steptimer += Time.unscaledDeltaTime;
+            steptimer += Time.deltaTime;
             yield return null;
         }
     }
@@ -109,7 +110,8 @@ public class ZoomManager : MonoBehaviour
             blinkC.a = Mathf.Lerp(initA, destA, rate);
             filterImage.color = blinkC;
             
-            steptimer += Time.unscaledDeltaTime;
+            //steptimer += Time.unscaledDeltaTime;
+            steptimer += Time.deltaTime;
             yield return null;
         }
         if(!isBlinkIn) filterObject.SetActive(false);
@@ -143,7 +145,8 @@ public class ZoomManager : MonoBehaviour
             blinkC.a = Mathf.Lerp(initA, destA, rate);
             filterImage.color = blinkC;
             
-            steptimer += Time.unscaledDeltaTime;
+            //steptimer += Time.unscaledDeltaTime;
+            steptimer += Time.deltaTime;
             yield return null;
         }
         if(!isFadeIn) filterObject.SetActive(false);
