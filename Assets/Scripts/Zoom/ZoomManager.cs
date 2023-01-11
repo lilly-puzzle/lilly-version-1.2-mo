@@ -16,9 +16,9 @@ public class ZoomManager : MonoBehaviour
     [Header("Constant Variable")]
     private const float zoomInOffset = 0.05f;
     private const float zoomOutOffset = 0.08f;
-    private const float zoomTime = 0.4f;
-    private const float blinkTime = 0.3f;
-    private const float fadeTime = 0.5f;
+    public const float zoomTime = 0.4f;
+    public const float blinkTime = 0.3f;
+    public const float fadeTime = 0.5f;
 
     [Header("Variable")]
     private Coroutine blinkCoroutine;

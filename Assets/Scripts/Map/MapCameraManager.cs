@@ -102,6 +102,6 @@ public class MapCameraManager : MonoBehaviour
     private void ZoomOutCurtain(){
         moveManager.SetVisible();
         backButtonManager.DeleteBackButton();
-        cameraOnPlayer =true;
+        cameraOnPlayer = true;
     }
 }
