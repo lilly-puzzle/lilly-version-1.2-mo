@@ -5,35 +5,45 @@ using UnityEngine;
 public class SimpleOneTouch : MonoBehaviour
 {
     /// <see href="https://answers.unity.com/questions/1126621/best-way-to-detect-touch-on-a-gameobject.html"/>
+    /// <see href="https://docs.unity3d.com/ScriptReference/Physics.Raycast.html"/>
 
-    private Vector3 touchPosWorld;
+    protected Vector3 ray;
+    protected GameObject col;
+    protected TouchPhase touchPhase;
  
-    private const TouchPhase touchPhaseBegan = TouchPhase.Began;
-    private const TouchPhase touchPhaseMoved = TouchPhase.Moved;
-    private const TouchPhase touchPhaseEnded = TouchPhase.Ended;
+    protected const TouchPhase touchPhaseBegan = TouchPhase.Began;
+    protected const TouchPhase touchPhaseMoved = TouchPhase.Moved;
+    protected const TouchPhase touchPhaseEnded = TouchPhase.Ended;
 
     private void Update() {
         if (Input.touchCount <= 0) return;
 
-        TouchPhase getTouchPhase = Input.GetTouch(0).phase;
+        touchPhase = Input.GetTouch(0).phase;
+        ray = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
 
-        touchPosWorld = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
+        RaycastHit hit;
+        col = null;
+        if (Physics.Raycast(ray, Vector3.forward, out hit)) {
+            col = hit.transform.gameObject;
 
-        Vector2 touchPosWorld2D = new Vector2(touchPosWorld.x, touchPosWorld.y);
-
-        RaycastHit2D hitInformation = Physics2D.Raycast(touchPosWorld2D, Camera.main.transform.forward);
-
-        if (hitInformation.collider == null) return;
-
-        GameObject touchedObject = hitInformation.transform.gameObject;
-
-        if (touchedObject == this.gameObject) {
-            if (getTouchPhase == touchPhaseBegan) {
-                FuncWhenTouchBegan();
-            } else if (getTouchPhase == touchPhaseMoved) {
-                FuncWhenTouchMoved();
-            } else if (getTouchPhase == touchPhaseEnded) {
-                FuncWhenTouchEnded();
+            if (col == this.gameObject) {
+                switch (touchPhase) {
+                    case touchPhaseBegan: {
+                        FuncWhenTouchBegan();
+                        break;
+                    }
+                    case touchPhaseMoved: {
+                        FuncWhenTouchMoved();
+                        break;
+                    }
+                    case touchPhaseEnded: {
+                        FuncWhenTouchEnded();
+                        break;
+                    }
+                    default: {
+                        break;
+                    }
+                }
             }
         }
     }

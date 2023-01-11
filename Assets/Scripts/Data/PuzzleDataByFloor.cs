@@ -9,15 +9,20 @@ using SaveDataPerPuzzle.Floor4;
 namespace PuzzleDataByFloor
 {
     [System.Serializable] public class Floor1 {
-        public MainPuzzle1Data saveMainPuzzle1;
-        public LPposeData saveLPpose;
+        public PlainHangerData savePlainHanger;
         public NameFindingData saveNameFinding;
         public MouseHoleData saveMouseHole;
+        public LPposeData saveLPpose;
+        public TVfrequencyData saveTVfrequency;
+        public MainPuzzle1Data saveMainPuzzle1;
+
         public Floor1() {
-            saveMainPuzzle1 = new MainPuzzle1Data();
-            saveLPpose = new LPposeData();
+            savePlainHanger = new PlainHangerData();
             saveNameFinding = new NameFindingData();
             saveMouseHole = new MouseHoleData();
+            saveLPpose = new LPposeData();
+            saveTVfrequency = new TVfrequencyData();
+            saveMainPuzzle1 = new MainPuzzle1Data();
         }
     }
 
