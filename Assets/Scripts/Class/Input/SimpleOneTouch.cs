@@ -21,9 +21,9 @@ public class SimpleOneTouch : MonoBehaviour
         touchPhase = Input.GetTouch(0).phase;
         ray = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
 
-        RaycastHit hit;
+        RaycastHit2D hit = Physics2D.Raycast(ray, Vector3.forward);
         col = null;
-        if (Physics.Raycast(ray, Vector3.forward, out hit)) {
+        if (hit.collider != null) {
             col = hit.transform.gameObject;
 
             if (col == this.gameObject) {
