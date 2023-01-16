@@ -21,6 +21,7 @@ public class DataManager : MonoBehaviour
 
     // If game is quited..
     private void OnApplicationQuit() {
+        InventoryManager.instance.SaveInventoryData();
         if (gameData != null) SaveDataInJson();
         Debug.Log("Quit Game");
     }

@@ -21,13 +21,11 @@ public class InventoryManager : MonoBehaviour
     public static InventoryManager instance;
 
     [Header("Variables")]
-    private bool isChanged = false;
-    public int curSelectedItem { get; private set; }
     private int sceneNum;
+    public int curSelectedItem { get; private set; }
     private PriorityQueue<int> popedItemIdx = new PriorityQueue<int>();
     public int[] slotStartIdx { get; private set; }
     // setter
-    public void SetIsChanged(bool a_isChanged) { isChanged = a_isChanged; }
     public void SetSlotStartIdx(int a_startIdx) { slotStartIdx[sceneNum] = a_startIdx; }
 
     [Header("Sprite Variables")]
@@ -64,9 +62,8 @@ public class InventoryManager : MonoBehaviour
 
     // save & load
     public void SaveInventoryData() {
-        if (isChanged) {
-            DataManager.instance.SetInventoryData(playerInventory);
-        }
+        playerInventory.RemoveAll(itemCode => itemCode == -1);
+        // DataManager.instance.SetInventoryData(playerInventory);
     }
 
     private void LoadInventoryData() {
@@ -88,6 +85,7 @@ public class InventoryManager : MonoBehaviour
     // about slot
     public bool PushItem(int a_itemCode) {
         int expectedSlotIdx;
+        Debug.Log("pop: " + popedItemIdx.Count);
 
         if (popedItemIdx.Count != 0) {
             int firstPopIdx = popedItemIdx.Pop();
