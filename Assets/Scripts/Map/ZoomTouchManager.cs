@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ZoomTouchManager : MonoBehaviour
+public class ZoomTouchManager : SimpleOneTouch
 {
     [SerializeField] private float zoomPosX;
     [SerializeField] private float zoomPosY;
@@ -11,7 +11,7 @@ public class ZoomTouchManager : MonoBehaviour
     [SerializeField] private MapCameraManager mapCameraManager;
 
 
-    void OnMouseUp(){
+    protected override void FuncWhenTouchEnded() {
         if(!JoystickManager.instance.GetisJoystickAct()){
             mapCameraManager.ZoomIn(zoomPosX, zoomPosY, zoomSize);
         }

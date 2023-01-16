@@ -82,7 +82,6 @@ public class MapCameraManager : MonoBehaviour
     }
 
     public void ZoomIn(float posX, float posY, float zoomSize){
-        zoomTouchObject[DataManager.gameData.characterData.characterPos.curFloor - 1].SetActive(false);
         cameraOnPlayer = false;
         cameraPos = mainCameraObject.transform.position;
         cameraSize = mainCamera.orthographicSize;
@@ -90,16 +89,17 @@ public class MapCameraManager : MonoBehaviour
     }
 
     public void ZoomOut(){
-        zoomTouchObject[DataManager.gameData.characterData.characterPos.curFloor - 1].SetActive(true);
         ZoomManager.instance.Zoom(false, cameraPos.x, cameraPos.y, cameraSize, ZoomOutCurtain);
     }
 
     private void ZoomInCurtain(){
+        zoomTouchObject[DataManager.gameData.characterData.characterPos.curFloor - 1].SetActive(false);
         moveManager.SetTransparent();
         backButtonManager.MakeBackButton();
     }
 
     private void ZoomOutCurtain(){
+        zoomTouchObject[DataManager.gameData.characterData.characterPos.curFloor - 1].SetActive(true);
         moveManager.SetVisible();
         backButtonManager.DeleteBackButton();
         cameraOnPlayer = true;
