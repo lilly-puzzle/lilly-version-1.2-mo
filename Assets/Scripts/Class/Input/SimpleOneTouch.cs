@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class SimpleOneTouch : MonoBehaviour
 {
@@ -29,7 +30,9 @@ public class SimpleOneTouch : MonoBehaviour
             if (col == this.gameObject) {
                 switch (touchPhase) {
                     case touchPhaseBegan: {
-                        FuncWhenTouchBegan();
+                        if(IsPointerOverUIObject() == false){
+                            FuncWhenTouchBegan();
+                        }
                         break;
                     }
                     case touchPhaseMoved: {
@@ -37,7 +40,9 @@ public class SimpleOneTouch : MonoBehaviour
                         break;
                     }
                     case touchPhaseEnded: {
-                        FuncWhenTouchEnded();
+                        if(IsPointerOverUIObject() == false){
+                            FuncWhenTouchEnded();
+                        }
                         break;
                     }
                     default: {
@@ -51,4 +56,12 @@ public class SimpleOneTouch : MonoBehaviour
     protected virtual void FuncWhenTouchBegan() { }
     protected virtual void FuncWhenTouchMoved() { }
     protected virtual void FuncWhenTouchEnded() { }
+
+    private bool IsPointerOverUIObject(){
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        return results.Count > 0;
+    }
 }
