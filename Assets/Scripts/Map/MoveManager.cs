@@ -57,7 +57,14 @@ public class MoveManager : MonoBehaviour
         playerPosX = DataManager.gameData.characterData.characterPos.curPosX;
     }
 
+    private void SaveCharacterData(){
+        DataManager.gameData.characterData.characterPos.curFloor = playerOnFloor;
+        playerPosX = playerObject.transform.position.x;
+        DataManager.gameData.characterData.characterPos.curPosX = playerPosX;
+    }
+
     void Update(){
+        SaveCharacterData();
         pastDir = selectedDir;
         ApplyDir();
         if(pastDir != selectedDir){

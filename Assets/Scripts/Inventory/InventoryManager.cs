@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -20,13 +21,11 @@ public class InventoryManager : MonoBehaviour
     public static InventoryManager instance;
 
     [Header("Variables")]
-    private bool isChanged = false;
-    public int curSelectedItem { get; private set; }
     private int sceneNum;
+    public int curSelectedItem { get; private set; }
     private PriorityQueue<int> popedItemIdx = new PriorityQueue<int>();
     public int[] slotStartIdx { get; private set; }
     // setter
-    public void SetIsChanged(bool a_isChanged) { isChanged = a_isChanged; }
     public void SetSlotStartIdx(int a_startIdx) { slotStartIdx[sceneNum] = a_startIdx; }
 
     [Header("Sprite Variables")]
@@ -35,6 +34,10 @@ public class InventoryManager : MonoBehaviour
     [Header("Object Variables")]
     [SerializeField] private GameObject canvasObj;
     [SerializeField] private GameObject zoomObj;
+
+    [Header("UI Variables")]
+    [SerializeField] private List<Button> leftBtn;
+    [SerializeField] private List<Button> rightBtn;
 
     [Header("Script Variables")]
     private INZoomControl zoomScript;
@@ -59,9 +62,8 @@ public class InventoryManager : MonoBehaviour
 
     // save & load
     public void SaveInventoryData() {
-        if (isChanged) {
-            DataManager.instance.SetInventoryData(playerInventory);
-        }
+        playerInventory.RemoveAll(itemCode => itemCode == -1);
+        // DataManager.instance.SetInventoryData(playerInventory);
     }
 
     private void LoadInventoryData() {
@@ -83,6 +85,7 @@ public class InventoryManager : MonoBehaviour
     // about slot
     public bool PushItem(int a_itemCode) {
         int expectedSlotIdx;
+        Debug.Log("pop: " + popedItemIdx.Count);
 
         if (popedItemIdx.Count != 0) {
             int firstPopIdx = popedItemIdx.Pop();
@@ -119,6 +122,8 @@ public class InventoryManager : MonoBehaviour
     }
 
     public void SelectItem(int a_itemCode) {
+        if (a_itemCode == -1) { curSelectedItem = -1; return; }
+        
         int floorNum = a_itemCode / 10000;
         int puzzleNum = a_itemCode % 10000 / 100;
         int itemNum = a_itemCode % 10000 % 100;
@@ -154,6 +159,12 @@ public class InventoryManager : MonoBehaviour
             int slotIdx = startIdx + i;
             ShowItem(i, (slotIdx < numOfItemInInventory) ? playerInventory[slotIdx] : -1);
         }
+
+        if (startIdx == 0) leftBtn[sceneNum].interactable = false;
+        else leftBtn[sceneNum].interactable = true;
+
+        if (startIdx == DefaultData.SIZE_OF_INVENTORY - DefaultData.NUM_OF_INVENTORY_SLOT[sceneNum]) rightBtn[sceneNum].interactable = false;
+        else rightBtn[sceneNum].interactable = true;
     }
 
     // function to check

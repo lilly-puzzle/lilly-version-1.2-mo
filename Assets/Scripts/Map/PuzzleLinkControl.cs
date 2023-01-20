@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PuzzleLinkControl : MonoBehaviour
+public class PuzzleLinkControl : SimpleOneTouch
 {
     public int PuzzleCode;
 
-    void OnMouseUp(){
+    protected override void FuncWhenTouchEnded() {
         if(!JoystickManager.instance.GetisJoystickAct()){
-            PlayerPrefs.SetInt("PuzzleCode", PuzzleCode);
+            PlayerPrefs.SetInt("Puzzle Code", PuzzleCode);
             TransitionManager.instance.SceneTransition("PuzzleScene");
         }
     }

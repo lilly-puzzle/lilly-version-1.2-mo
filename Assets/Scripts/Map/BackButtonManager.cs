@@ -49,8 +49,9 @@ public class BackButtonManager : MonoBehaviour
     }
 
     public void DeleteBackButton(){
-        if(fadeCoroutine != null) StopCoroutine(fadeCoroutine);
-        fadeCoroutine = StartCoroutine(Fade(false));
+        Color color_ = buttonImg.color;
+        color_.a = 0.0f;
+        buttonImg.color = color_;
     }
 
     public void PressBackButton(){

@@ -1,39 +1,54 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class SimpleOneTouch : MonoBehaviour
 {
     /// <see href="https://answers.unity.com/questions/1126621/best-way-to-detect-touch-on-a-gameobject.html"/>
+    /// <see href="https://docs.unity3d.com/ScriptReference/Physics.Raycast.html"/>
 
-    private Vector3 touchPosWorld;
+    protected Vector3 ray;
+    protected GameObject col;
+    protected TouchPhase touchPhase;
  
-    private const TouchPhase touchPhaseBegan = TouchPhase.Began;
-    private const TouchPhase touchPhaseMoved = TouchPhase.Moved;
-    private const TouchPhase touchPhaseEnded = TouchPhase.Ended;
+    protected const TouchPhase touchPhaseBegan = TouchPhase.Began;
+    protected const TouchPhase touchPhaseMoved = TouchPhase.Moved;
+    protected const TouchPhase touchPhaseEnded = TouchPhase.Ended;
 
     private void Update() {
         if (Input.touchCount <= 0) return;
 
-        TouchPhase getTouchPhase = Input.GetTouch(0).phase;
+        touchPhase = Input.GetTouch(0).phase;
+        ray = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
 
-        touchPosWorld = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
+        RaycastHit2D hit = Physics2D.Raycast(ray, Vector3.forward);
+        col = null;
+        if (hit.collider != null) {
+            col = hit.transform.gameObject;
 
-        Vector2 touchPosWorld2D = new Vector2(touchPosWorld.x, touchPosWorld.y);
-
-        RaycastHit2D hitInformation = Physics2D.Raycast(touchPosWorld2D, Camera.main.transform.forward);
-
-        if (hitInformation.collider == null) return;
-
-        GameObject touchedObject = hitInformation.transform.gameObject;
-
-        if (touchedObject == this.gameObject) {
-            if (getTouchPhase == touchPhaseBegan) {
-                FuncWhenTouchBegan();
-            } else if (getTouchPhase == touchPhaseMoved) {
-                FuncWhenTouchMoved();
-            } else if (getTouchPhase == touchPhaseEnded) {
-                FuncWhenTouchEnded();
+            if (col == this.gameObject) {
+                switch (touchPhase) {
+                    case touchPhaseBegan: {
+                        if(IsPointerOverUIObject() == false){
+                            FuncWhenTouchBegan();
+                        }
+                        break;
+                    }
+                    case touchPhaseMoved: {
+                        FuncWhenTouchMoved();
+                        break;
+                    }
+                    case touchPhaseEnded: {
+                        if(IsPointerOverUIObject() == false){
+                            FuncWhenTouchEnded();
+                        }
+                        break;
+                    }
+                    default: {
+                        break;
+                    }
+                }
             }
         }
     }
@@ -41,4 +56,12 @@ public class SimpleOneTouch : MonoBehaviour
     protected virtual void FuncWhenTouchBegan() { }
     protected virtual void FuncWhenTouchMoved() { }
     protected virtual void FuncWhenTouchEnded() { }
+
+    private bool IsPointerOverUIObject(){
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        return results.Count > 0;
+    }
 }
